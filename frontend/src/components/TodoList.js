@@ -13,11 +13,17 @@ const TodoList = () => {
   const todos = useSelector((state) => state) || []
 
   return (
-    <ul className="list-group">
-      {todos.map((todo) => (
-        <TodoItem key={todo._id} todo={todo} />
-      ))}
-    </ul>
+    <div>
+      {todos.length === 0 ? (
+        <p className="text-center text-muted">No task available. Please add some task!</p>
+      ) : (
+        <ul className="list-group">
+          {todos.map((todo) => (
+            <TodoItem key={todo._id} todo={todo} />
+          ))}
+        </ul>
+      )}
+    </div>
   );
 };
 

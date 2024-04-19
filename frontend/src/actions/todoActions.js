@@ -8,7 +8,6 @@ export const FETCH_TODOS = 'FETCH_TODOS';
 export const fetchTodos = () => async (dispatch) => {
   try {
     const response = await api.get('/todos');
-    console.log(response)
     dispatch({
       type: FETCH_TODOS,
       payload: response.data,

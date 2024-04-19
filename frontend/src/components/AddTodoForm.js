@@ -23,7 +23,7 @@ const AddTodoForm = () => {
         <input
           type="text"
           className="form-control"
-          placeholder="Add new todo..."
+          placeholder="Add new task..."
           value={todo}
           onChange={(e) => setTodo(e.target.value)}
         />

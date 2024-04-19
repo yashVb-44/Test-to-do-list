@@ -1,10 +1,20 @@
 const Todo = require('../models/Todo');
+const { format, formatDistanceToNow } = require('date-fns');
+
 
 // Get all todos
 exports.getTodos = async (req, res) => {
     try {
         const todos = await Todo.find();
-        res.json(todos);
+
+        const formattedTodos = todos.map(todo => {
+            return {
+                ...todo.toObject(),
+                time: formatDistanceToNow(new Date(todo.updatedAt), { addSuffix: true }),
+            };
+        });
+
+        res.json(formattedTodos);
     } catch (error) {
         res.status(500).json({ error: 'Error fetching todos' });
     }
@@ -16,9 +26,14 @@ exports.createTodo = async (req, res) => {
     try {
         const newTodo = new Todo({ text });
         await newTodo.save();
-        res.json(newTodo);
+        const formattedTime = formatDistanceToNow(new Date(newTodo.updatedAt), { addSuffix: true });
+        res.json({
+            ...newTodo.toObject(),
+            time: formattedTime,
+        });
     } catch (error) {
         res.status(400).json({ error: 'Error creating todo' });
+        console.log(error)
     }
 };
 
